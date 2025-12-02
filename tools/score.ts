@@ -78,7 +78,7 @@ function normFromSonarMeasure(measures: Record<string, any>) {
   // complexity: branches
 
   const dup = Number(measures.duplicated_lines_density ?? 0);
-  norms.duplication = Math.max(0, Math.round(100 - dup));
+  norms.duplication = Math.max(0, dup * 100);
   // duplicated_lines_density: %
   
   const reliabilityRating = Number(measures.reliability_rating ?? 0);
