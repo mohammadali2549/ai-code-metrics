@@ -17,10 +17,7 @@ test("getOrder throws when orderId is empty", async () => {
     async () => getOrder("" as any),
     (err: unknown) => {
       assert.ok(err instanceof Error);
-      assert.equal(
-        (err as Error).message,
-        "orderId is required to retrieve an order."
-      );
+      assert.equal((err as Error).message, "orderId is required to retrieve a PayPal order.");
       return true;
     }
   );
@@ -42,7 +39,7 @@ test("createOrder fails with missing PayPal credentials", async () => {
         assert.ok(err instanceof Error);
         assert.equal(
           (err as Error).message,
-          "Missing PayPal credentials. Set PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET environment variables before calling PayPal APIs."
+          "PayPal client credentials are not configured. Please set PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET."
         );
         return true;
       }
