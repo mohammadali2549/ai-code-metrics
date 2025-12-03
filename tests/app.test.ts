@@ -11,6 +11,18 @@ const hasPayPalCredentials =
   Boolean(process.env.PAYPAL_CLIENT_ID) &&
   Boolean(process.env.PAYPAL_CLIENT_SECRET);
 
+const sampleOrderRequest = {
+  intent: "CAPTURE" as const,
+  purchase_units: [
+    {
+      amount: {
+        currency_code: "USD",
+        value: "1.00",
+      },
+    },
+  ],
+};
+
 test("getOrder throws when orderId is empty", async () => {
   await assert.rejects(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,7 +31,7 @@ test("getOrder throws when orderId is empty", async () => {
       assert.ok(err instanceof Error);
       assert.equal(
         (err as Error).message,
-        "orderId is required to retrieve an order."
+        "orderId is required to retrieve a PayPal order."
       );
       return true;
     }
@@ -36,13 +48,13 @@ test("createOrder fails with missing PayPal credentials", async () => {
   try {
     await assert.rejects(
       async () => {
-        await createOrder();
+        await createOrder(sampleOrderRequest);
       },
       (err: unknown) => {
         assert.ok(err instanceof Error);
         assert.equal(
           (err as Error).message,
-          "Missing PayPal credentials. Set PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET environment variables before calling PayPal APIs."
+          "Missing PayPal credentials. Please set PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET environment variables."
         );
         return true;
       }
@@ -64,7 +76,7 @@ if (!hasPayPalCredentials) {
   );
 } else {
   test("createOrder then getOrder using returned id", async () => {
-    const createdOrder = await createOrder();
+    const createdOrder = await createOrder(sampleOrderRequest);
 
     const createdOrderId =
       createdOrder && typeof createdOrder === "object"
