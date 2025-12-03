@@ -1,14 +1,20 @@
 {
   "dependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "@paypal/checkout-server-sdk": "^1.0.3",
+    "@types/express": "^5.0.6",
+    "@types/supertest": "^6.0.3",
     "dotenv": "^16.4.5",
-    "fs": "^0.0.1-security"
+    "express": "^5.2.1",
+    "fs": "^0.0.1-security",
+    "supertest": "^7.1.4"
   },
   "name": "ai_code_quality_sonarcloud",
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "@types/paypal__checkout-server-sdk": "^1.0.8",
     "@typescript-eslint/eslint-plugin": "^8.48.0",
     "@typescript-eslint/parser": "^8.48.0",
     "eslint": "^9.39.1",
