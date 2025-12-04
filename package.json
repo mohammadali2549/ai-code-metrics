@@ -1,7 +1,10 @@
 {
   "dependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "@maxio-com/advanced-billing-sdk": "^7.0.1",
+    "@types/express": "^5.0.6",
     "dotenv": "^16.4.5",
+    "express": "^5.2.1",
     "fs": "^0.0.1-security"
   },
   "name": "ai_code_quality_sonarcloud",
