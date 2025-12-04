@@ -119,7 +119,7 @@ async function getAccessToken(): Promise<string> {
 
   if (!clientId || !clientSecret) {
     throw new Error(
-      'PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET must be set in the environment.',
+      'Missing PayPal credentials. Set PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET environment variables before calling PayPal APIs.',
     );
   }
 
@@ -196,6 +196,10 @@ export async function createOrder(
 }
 
 export async function getOrder(orderId: string): Promise<PayPalOrder> {
+  if (typeof orderId !== 'string' || orderId.trim() === '') {
+    throw new Error('orderId is required to retrieve an order.');
+  }
+
   const accessToken = await getAccessToken();
 
   return httpRequest<PayPalOrder>(
