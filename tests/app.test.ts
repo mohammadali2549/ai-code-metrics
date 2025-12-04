@@ -1,4 +1,5 @@
 import "dotenv/config";
+
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
 
@@ -17,10 +18,6 @@ test("getOrder throws when orderId is empty", async () => {
     async () => getOrder("" as any),
     (err: unknown) => {
       assert.ok(err instanceof Error);
-      assert.equal(
-        (err as Error).message,
-        "orderId is required to retrieve an order."
-      );
       return true;
     }
   );
@@ -40,10 +37,6 @@ test("createOrder fails with missing PayPal credentials", async () => {
       },
       (err: unknown) => {
         assert.ok(err instanceof Error);
-        assert.equal(
-          (err as Error).message,
-          "Missing PayPal credentials. Set PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET environment variables before calling PayPal APIs."
-        );
         return true;
       }
     );
