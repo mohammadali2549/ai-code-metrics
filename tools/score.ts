@@ -199,7 +199,8 @@ function main(): Norms {
     norms.maintainability,
     norms.duplication,
     norms.performance,
-    norms.fixAttempts
+    norms.fixAttempts,
+    norms.kloc
   ];
 
   const csvLine = resultValues.join(",");
