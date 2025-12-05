@@ -70,7 +70,7 @@ function normFromSonarMeasure(measures: Record<string, any>) {
   console.log("[Sonar] security_rating:", measures.security_rating);
 
   const smells = Number(measures.code_smells ?? 0);
-  norms.maintainability = Math.max(0, 100 - smells - (measures.sqale_index * 0.2));
+  norms.maintainability = Math.max(0, 100 - smells - (measures.sqale_index * 0.5));
   // code_smells: #
   // sqale_index: mins
 

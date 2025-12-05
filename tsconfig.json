@@ -1,26 +1,24 @@
 {
   "compilerOptions": {
-    "rootDir": "./",
-    "outDir": "./dist",
-
-    "module": "nodenext",
-    "target": "esnext",
-    "types": ["node"],
-
-    "sourceMap": true,
+    "module": "commonjs",
     "declaration": true,
-    "declarationMap": true,
-
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-
-    "strict": true,
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/**/*", "tools/**/*", "tests/**/*"]
+  "include": ["src/**/*", "tests/**/*", "tools/**/*"],
+  "exclude": ["frontend", "backend", "node_modules", "dist"]
 }
+

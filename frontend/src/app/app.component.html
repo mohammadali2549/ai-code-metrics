@@ -1,0 +1,9 @@
+<div class="app-container">
+  <div class="carousel-section">
+    <app-carousel (itemSelected)="onItemSelected($event)"></app-carousel>
+  </div>
+  <div class="details-section">
+    <app-item-details [itemId]="selectedItemId"></app-item-details>
+  </div>
+</div>
+

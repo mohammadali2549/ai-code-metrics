@@ -1,0 +1,35 @@
+<div class="details-container">
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading item details...</p>
+  </div>
+
+  <div *ngIf="error" class="error-state">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="!loading && !error && !item" class="empty-state">
+    <p>Select an item from the carousel to view details</p>
+  </div>
+
+  <div *ngIf="!loading && !error && item" class="item-details">
+    <div class="item-image-section">
+      <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
+    </div>
+    <div class="item-info-section">
+      <div class="item-header">
+        <span class="category-badge">{{ item.category }}</span>
+        <h1 class="item-name">{{ item.name }}</h1>
+      </div>
+      <p class="item-description">{{ item.description }}</p>
+      <div class="item-price-section">
+        <span class="price-label">Price</span>
+        <span class="item-price">${{ item.price.toFixed(2) }}</span>
+      </div>
+      <button class="buy-now-button" (click)="buyNow()">
+        Buy Now
+      </button>
+    </div>
+  </div>
+</div>
+

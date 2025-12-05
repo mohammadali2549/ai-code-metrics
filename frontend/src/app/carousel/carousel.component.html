@@ -1,0 +1,47 @@
+<div class="carousel-container">
+  <div class="carousel-wrapper">
+    <button
+      class="carousel-button prev"
+      (click)="previous()"
+      [disabled]="items.length === 0"
+      aria-label="Previous item"
+    >
+      ‹
+    </button>
+
+    <div class="carousel-track" *ngIf="items.length > 0">
+      <div
+        class="carousel-item"
+        *ngFor="let item of items; let i = index"
+        [class.active]="i === currentIndex"
+        (click)="selectItem(item.id)"
+      >
+        <img [src]="item.imageUrl" [alt]="item.name" />
+        <div class="item-overlay">
+          <h3>{{ item.name }}</h3>
+          <p class="price">${{ item.price.toFixed(2) }}</p>
+        </div>
+      </div>
+    </div>
+
+    <button
+      class="carousel-button next"
+      (click)="next()"
+      [disabled]="items.length === 0"
+      aria-label="Next item"
+    >
+      ›
+    </button>
+  </div>
+
+  <div class="carousel-indicators" *ngIf="items.length > 1">
+    <button
+      *ngFor="let item of items; let i = index"
+      class="indicator"
+      [class.active]="i === currentIndex"
+      (click)="goToSlide(i)"
+      [attr.aria-label]="'Go to slide ' + (i + 1)"
+    ></button>
+  </div>
+</div>
+

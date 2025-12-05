@@ -1,0 +1,31 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+.carousel-section {
+  height: 30vh;
+  min-height: 300px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.details-section {
+  height: 70vh;
+  min-height: 500px;
+  background-color: #fafafa;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .carousel-section {
+    min-height: 250px;
+  }
+  
+  .details-section {
+    min-height: 400px;
+  }
+}
+
