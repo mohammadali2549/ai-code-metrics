@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { ApiError } from '@maxio-com/advanced-billing-sdk';
 
 import {
   viewAllSubscriptions,
@@ -182,7 +181,7 @@ test(
       () => changeSubscriptionPlan(subscriptionId, 0, when),
       (error: unknown) => {
         // We expect the Maxio API to reject an invalid productId.
-        assert.ok(error instanceof ApiError || error instanceof Error);
+        assert.ok(error instanceof Error);
         return true;
       },
     );
@@ -202,7 +201,7 @@ test(
         // For an invalid id we expect the API to fail. This still exercises the
         // wiring to the Maxio SubscriptionStatusController without mutating any
         // real customer data.
-        assert.ok(error instanceof ApiError || error instanceof Error);
+        assert.ok(error instanceof Error);
         return true;
       },
     );
