@@ -110,6 +110,41 @@ function computeComposite(norms: Norms, weights: Weights): number {
 }
 
 /**
+ * Parse the Node.js test runner output (node-test-output.txt) to compute
+ * a unit test pass rate. This matches lines like:
+ *
+ * ℹ tests 4
+ * ℹ pass 4
+ */
+function computeUnitTestPassRateFromNodeOutput(): number {
+  const OUTPUT_PATH = "node-test-output.txt";
+
+  if (!fs.existsSync(OUTPUT_PATH)) {
+    return -1;
+  }
+
+  try {
+    const text = fs.readFileSync(OUTPUT_PATH, "utf8");
+
+    // Summary lines typically contain "tests N" and "pass M"
+    // e.g. "ℹ tests 4" / "ℹ pass 4".
+    const testsMatch = text.match(/tests\s+(\d+)/);
+    const passMatch = text.match(/pass\s+(\d+)/);
+
+    const totalTests = testsMatch ? Number(testsMatch[1]) || 0 : 0;
+    const passedTests = passMatch ? Number(passMatch[1]) || 0 : 0;
+
+    if (totalTests <= 0) return 0;
+
+    const passRate = passedTests / totalTests; // 0..1
+    return passRate;
+  } catch (e) {
+    console.warn("Failed to read or parse node-test-output.txt", e);
+    return -1;
+  }
+}
+
+/**
  * Compute KLOC (thousands of lines of code) for the primary app entrypoint.
  * Currently this is based on `src/app.ts` only, since that file contains
  * almost all of the example project logic and UI.
@@ -159,6 +194,18 @@ function main(): Norms {
     kloc: -1
   };
   
+  applyAgentScoreCard(norms);
+
+  // Derive unit test pass rate from the Node test runner output if available.
+  const passRate = computeUnitTestPassRateFromNodeOutput();
+  if (passRate >= 0) {
+    norms.unitTestPassRate = passRate;
+    console.log(
+      "[Tests] unitTestPassRate from node-test-output.txt:",
+      passRate,
+    );
+  }
+
   // Dynamically compute KLOC from src/app.ts so the scorecard reflects the
   // current size of the main application file.
   const appKloc = computeAppKloc();
@@ -166,8 +213,6 @@ function main(): Norms {
     norms.kloc = appKloc;
     console.log("[KLOC] src/app.ts:", appKloc, "KLOC");
   }
-
-  applyAgentScoreCard(norms);
 
   // incorporate Sonar measures
   if (sonarMetricsRaw) {
