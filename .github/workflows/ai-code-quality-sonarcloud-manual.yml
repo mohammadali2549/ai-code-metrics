@@ -14,6 +14,13 @@ jobs:
       SONAR_HOST: https://sonarcloud.io
       SONAR_ORG: ${{ secrets.SONAR_ORG }}
       SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+      # Maxio credentials used by src/app.ts and the integration tests.
+      # These must be configured as GitHub Actions secrets in the repository
+      # or organization settings.
+      MAXIO_SITE: ${{ secrets.MAXIO_SITE }}
+      MAXIO_ENVIRONMENT: ${{ secrets.MAXIO_ENVIRONMENT }}
+      MAXIO_BASIC_AUTH_USERNAME: ${{ secrets.MAXIO_BASIC_AUTH_USERNAME }}
+      MAXIO_BASIC_AUTH_PASSWORD: ${{ secrets.MAXIO_BASIC_AUTH_PASSWORD }}
 
     steps:
       - name: Checkout code
