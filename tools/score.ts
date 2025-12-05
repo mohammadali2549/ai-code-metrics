@@ -109,6 +109,30 @@ function computeComposite(norms: Norms, weights: Weights): number {
   return Math.round(s * 100) / 100;
 }
 
+/**
+ * Compute KLOC (thousands of lines of code) for the primary app entrypoint.
+ * Currently this is based on `src/app.ts` only, since that file contains
+ * almost all of the example project logic and UI.
+ */
+function computeAppKloc(): number {
+  try {
+    const srcPath = "src/app.ts";
+    if (!fs.existsSync(srcPath)) return -1;
+
+    const contents = fs.readFileSync(srcPath, "utf8");
+    // Count logical lines; treat every line in the file as a code line for
+    // simplicity. This keeps the metric easy to reason about.
+    const totalLines = contents.split(/\r\n|\n|\r/).length;
+
+    // thousands of lines of code
+    const kloc = totalLines / 1000;
+    return Math.round(kloc * 100) / 100; // 2 decimal places
+  } catch (e) {
+    console.warn("failed to compute KLOC from src/app.ts", e);
+    return -1;
+  }
+}
+
 function main(): Norms {
   const filesInfo = safeRead("files_info.json") || { total_lines: 0 };
   const sonarMetricsRaw = safeRead("sonar_metrics.json");
@@ -131,9 +155,17 @@ function main(): Norms {
     duplication: -1,
     performance: -1,
     // Efficiency
-    fixAttempts: -1
+    fixAttempts: -1,
+    kloc: -1
   };
   
+  // Dynamically compute KLOC from src/app.ts so the scorecard reflects the
+  // current size of the main application file.
+  const appKloc = computeAppKloc();
+  if (appKloc >= 0) {
+    norms.kloc = appKloc;
+    console.log("[KLOC] src/app.ts:", appKloc, "KLOC");
+  }
 
   applyAgentScoreCard(norms);
 

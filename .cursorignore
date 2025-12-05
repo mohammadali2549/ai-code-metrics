@@ -2,3 +2,4 @@
 *.test.ts
 /dist
 /node_modules
+tools/score.ts
