@@ -32,9 +32,6 @@ function getRequiredEnv(name: string): string {
 }
 
 const MAXIO_SITE = getRequiredEnv('MAXIO_SITE');
-const MAXIO_ENVIRONMENT =
-  ((process.env.MAXIO_ENVIRONMENT as Environment | undefined) ??
-    Environment.US);
 const MAXIO_BASIC_AUTH_USERNAME = getRequiredEnv('MAXIO_BASIC_AUTH_USERNAME');
 const MAXIO_BASIC_AUTH_PASSWORD = getRequiredEnv('MAXIO_BASIC_AUTH_PASSWORD');
 
@@ -48,7 +45,6 @@ const client = new Client({
     password: MAXIO_BASIC_AUTH_PASSWORD,
   },
   timeout: 120_000,
-  environment: MAXIO_ENVIRONMENT,
   site: MAXIO_SITE,
 });
 
