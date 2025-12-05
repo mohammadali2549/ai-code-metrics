@@ -16,10 +16,14 @@
     "@typescript-eslint/eslint-plugin": "^8.48.0",
     "@typescript-eslint/parser": "^8.48.0",
     "eslint": "^9.39.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typhonjs-escomplex": "^0.1.0"
   },
   "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/server.js",
+    "dev": "node --loader ts-node/esm ./src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
