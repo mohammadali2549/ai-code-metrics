@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "@maxio-com/advanced-billing-sdk": "^7.0.1",
     "@types/express": "^5.0.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
