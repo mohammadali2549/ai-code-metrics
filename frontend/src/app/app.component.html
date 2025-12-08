@@ -1,9 +1,122 @@
 <div class="app-container">
-  <div class="carousel-section">
-    <app-carousel (itemSelected)="onItemSelected($event)"></app-carousel>
-  </div>
-  <div class="details-section">
-    <app-item-details [itemId]="selectedItemId"></app-item-details>
-  </div>
+  <header class="app-header">
+    <div class="app-header-left">
+      <h1 class="app-title">Storefront</h1>
+      <p class="app-subtitle">Browse items or manage customer subscriptions.</p>
+    </div>
+    <div class="app-header-right">
+      <button
+        class="primary-button"
+        *ngIf="!showSubscriptions"
+        (click)="openSubscriptions()"
+      >
+        View Subscriptions
+      </button>
+      <button
+        class="secondary-button"
+        *ngIf="showSubscriptions"
+        (click)="closeSubscriptions()"
+      >
+        Back to Items
+      </button>
+    </div>
+  </header>
+
+  <ng-container *ngIf="!showSubscriptions; else subscriptionsView">
+    <div class="carousel-section">
+      <app-carousel (itemSelected)="onItemSelected($event)"></app-carousel>
+    </div>
+    <div class="details-section">
+      <app-item-details [itemId]="selectedItemId"></app-item-details>
+    </div>
+  </ng-container>
+
+  <ng-template #subscriptionsView>
+    <section class="subscriptions-section">
+      <h2>Subscriptions</h2>
+      <p class="subscriptions-helper-text">
+        This view is powered by the backend Maxio subscription APIs. Use the
+        filters and search below to explore customer subscriptions.
+      </p>
+      <div class="subscriptions-toolbar">
+        <div class="filter-group">
+          <label>Status filter</label>
+          <select #statusFilter (change)="onFilterChange(statusFilter.value, searchInput.value)">
+            <option value="">All</option>
+            <option value="active">Active</option>
+            <option value="canceled">Canceled</option>
+            <option value="past_due">Past Due</option>
+            <option value="trialing">Trial</option>
+          </select>
+        </div>
+        <div class="search-group">
+          <label>Search</label>
+          <input
+            type="text"
+            placeholder="Customer name or email"
+            #searchInput
+            (keyup.enter)="onFilterChange(statusFilter.value, searchInput.value)"
+          />
+          <button class="primary-button small" (click)="onFilterChange(statusFilter.value, searchInput.value)">
+            Apply
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="loadingSubscriptions" class="subscriptions-table-placeholder">
+        <p>Loading subscriptions...</p>
+      </div>
+
+      <div *ngIf="!loadingSubscriptions && subscriptionsError" class="subscriptions-table-placeholder error">
+        <p>{{ subscriptionsError }}</p>
+      </div>
+
+      <div *ngIf="!loadingSubscriptions && !subscriptionsError && subscriptions.length === 0" class="subscriptions-table-placeholder">
+        <p>No subscriptions found for the selected filters.</p>
+      </div>
+
+      <table
+        *ngIf="!loadingSubscriptions && !subscriptionsError && subscriptions.length > 0"
+        class="subscriptions-table"
+      >
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Email</th>
+            <th>Plan</th>
+            <th>Status</th>
+            <th>Next Billing</th>
+            <th>Monthly Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sub of subscriptions">
+            <td>{{ sub.customerName }}</td>
+            <td>{{ sub.customerEmail }}</td>
+            <td>{{ sub.plan }}</td>
+            <td>{{ sub.status }}</td>
+            <td>{{ sub.nextBillingDate || '—' }}</td>
+            <td>
+              {{ sub.monthlyAmount | currency }}
+              <div class="row-actions">
+                <button
+                  class="secondary-button small"
+                  (click)="promptChangePlan(sub)"
+                >
+                  Change plan
+                </button>
+                <button
+                  class="secondary-button small danger"
+                  (click)="promptCancel(sub)"
+                >
+                  Cancel
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </ng-template>
 </div>
 

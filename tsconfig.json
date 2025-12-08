@@ -18,7 +18,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/**/*", "tests/**/*", "tools/**/*"],
-  "exclude": ["frontend", "backend", "node_modules", "dist"]
+  "include": ["src/**/*", "tools/**/*"],
+  "exclude": ["frontend", "backend", "node_modules", "dist", "tests"]
 }
 
