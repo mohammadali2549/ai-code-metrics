@@ -1,9 +1,23 @@
 <div class="app-container">
-  <div class="carousel-section">
+  <div class="header-section">
+    <button class="subscription-btn" (click)="openSubscriptionView()">
+      View Subscriptions
+    </button>
+  </div>
+  <div class="carousel-section" *ngIf="!showSubscriptionView">
     <app-carousel (itemSelected)="onItemSelected($event)"></app-carousel>
   </div>
-  <div class="details-section">
+  <div class="details-section" *ngIf="!showSubscriptionView">
     <app-item-details [itemId]="selectedItemId"></app-item-details>
+  </div>
+  <div class="subscription-section" *ngIf="showSubscriptionView">
+    <div class="subscription-header">
+      <h2>Subscription Management</h2>
+      <button class="back-btn" (click)="closeSubscriptionView()">Back to Landing Page</button>
+    </div>
+    <div class="subscription-content">
+      <p>Subscription view will be implemented here. Use the Maxio API endpoints to manage subscriptions.</p>
+    </div>
   </div>
 </div>
 
