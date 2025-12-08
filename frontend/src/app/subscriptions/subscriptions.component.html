@@ -1,0 +1,40 @@
+<div class="subscriptions-container">
+  <h2>Subscriptions</h2>
+
+  <div *ngIf="isLoading">Loading subscriptions...</div>
+  <div *ngIf="!isLoading && errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
+  <table
+    class="subscriptions-table"
+    *ngIf="!isLoading && !errorMessage && subscriptions.length; else emptyState"
+  >
+    <thead>
+      <tr>
+        <th>Customer</th>
+        <th>Email</th>
+        <th>Plan</th>
+        <th>Status</th>
+        <th>Next Billing</th>
+        <th>Monthly Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sub of subscriptions">
+        <td>{{ sub.customerName }}</td>
+        <td>{{ sub.customerEmail }}</td>
+        <td>{{ sub.plan }}</td>
+        <td>{{ sub.status | titlecase }}</td>
+        <td>{{ sub.nextBillingDate }}</td>
+        <td>\${{ sub.monthlyAmount }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #emptyState>
+    <p>No subscriptions found.</p>
+  </ng-template>
+</div>
+
+

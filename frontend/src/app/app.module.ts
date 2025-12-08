@@ -4,9 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 
 @NgModule({
-  declarations: [AppComponent, CarouselComponent, ItemDetailsComponent],
+  declarations: [AppComponent, CarouselComponent, ItemDetailsComponent, SubscriptionsComponent],
   imports: [BrowserModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],

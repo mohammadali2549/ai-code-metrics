@@ -1,9 +1,25 @@
 <div class="app-container">
-  <div class="carousel-section">
-    <app-carousel (itemSelected)="onItemSelected($event)"></app-carousel>
-  </div>
-  <div class="details-section">
-    <app-item-details [itemId]="selectedItemId"></app-item-details>
-  </div>
+  <header class="app-header">
+    <h1>Landing Page</h1>
+    <button type="button" (click)="openSubscriptions()">
+      View Subscriptions
+    </button>
+  </header>
+
+  <ng-container *ngIf="!showSubscriptions; else subscriptionsView">
+    <div class="carousel-section">
+      <app-carousel (itemSelected)="onItemSelected($event)"></app-carousel>
+    </div>
+    <div class="details-section">
+      <app-item-details [itemId]="selectedItemId"></app-item-details>
+    </div>
+  </ng-container>
+
+  <ng-template #subscriptionsView>
+    <button type="button" (click)="openLanding()">
+      Back to Landing
+    </button>
+    <app-subscriptions></app-subscriptions>
+  </ng-template>
 </div>
 

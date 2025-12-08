@@ -1,0 +1,26 @@
+.subscriptions-container {
+  padding: 1.5rem;
+}
+
+.subscriptions-container h2 {
+  margin-bottom: 1rem;
+}
+
+.subscriptions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.subscriptions-table th,
+.subscriptions-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.subscriptions-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+
