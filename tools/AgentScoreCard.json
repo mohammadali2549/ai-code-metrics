@@ -1,17 +1,17 @@
 {
-    "issuesFound": 0,
-    "issuesFixed": 0,
-    "fixAttempts": 0,
-    "compilable": 0,
-    "testsPassRate": 0,
-    "examples": {
-      "fixAttempts": 3,
-      "issuesFound": 2,
-      "issuesFixed": 1
-    },
-    "example_explanations": {
-      "issuesFound": "Count of issues found in the codebase (integer). Example: 2 issues found during your implementation",
-      "issuesFixed": "Count of issues fixed in the codebase (integer). Example: 1 issue fixed during your implementation",
-      "fixAttempts": "Count of distinct implementation attempts before success (integer). Example: 2 retries = 3 attempts during your implementation" 
-    }
+  "issuesFound": 1,
+  "issuesFixed": 1,
+  "fixAttempts": 1,
+  "compilable": 0,
+  "testsPassRate": 0,
+  "examples": {
+    "fixAttempts": 3,
+    "issuesFound": 2,
+    "issuesFixed": 1
+  },
+  "example_explanations": {
+    "issuesFound": "Count of issues found in the codebase (integer). Example: 2 issues found during your implementation",
+    "issuesFixed": "Count of issues fixed in the codebase (integer). Example: 1 issue fixed during your implementation",
+    "fixAttempts": "Count of distinct implementation attempts before success (integer). Example: 2 retries = 3 attempts during your implementation"
+  }
 }
