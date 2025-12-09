@@ -1,0 +1,201 @@
+<div class="subscriptions-container">
+  <div class="subscriptions-header">
+    <h2>Subscriptions</h2>
+    <div class="filters">
+      <label>
+        Status
+        <select [(ngModel)]="statusFilter">
+          <option value="all">All</option>
+          <option value="active">Active</option>
+          <option value="canceled">Canceled</option>
+          <option value="past_due">Past Due</option>
+          <option value="trialing">Trial</option>
+        </select>
+      </label>
+
+      <label>
+        Search
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Name or email"
+        />
+      </label>
+
+      <button (click)="applyFilters()" [disabled]="loadingList">
+        Apply
+      </button>
+    </div>
+  </div>
+
+  <div class="subscriptions-content">
+    <div class="subscriptions-list">
+      <div *ngIf="loadingList" class="info-text">Loading subscriptions...</div>
+      <div *ngIf="!loadingList && subscriptions.length === 0" class="info-text">
+        No subscriptions found.
+      </div>
+
+      <table *ngIf="subscriptions.length > 0">
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Email</th>
+            <th>Plan</th>
+            <th>Status</th>
+            <th>Next Billing</th>
+            <th>Amount (monthly)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let sub of subscriptions"
+            (click)="selectSubscription(sub)"
+            class="subscription-row"
+          >
+            <td>{{ sub.customerName }}</td>
+            <td>{{ sub.customerEmail || '-' }}</td>
+            <td>{{ sub.plan || '-' }}</td>
+            <td>{{ sub.status || '-' }}</td>
+            <td>{{ sub.nextBillingDate || '-' }}</td>
+            <td>
+              <ng-container *ngIf="sub.monthlyAmountInCents != null; else na">
+                {{ sub.monthlyAmountInCents / 100 | currency }}
+              </ng-container>
+              <ng-template #na>-</ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subscription-details" *ngIf="selectedSubscription">
+      <div *ngIf="loadingDetails" class="info-text">Loading details...</div>
+
+      <div *ngIf="!loadingDetails">
+        <h3>Subscription Details</h3>
+
+        <div class="detail-section">
+          <h4>Customer</h4>
+          <p>
+            <strong>Name:</strong>
+            {{ selectedSubscription.customerInfo.name }}
+          </p>
+          <p>
+            <strong>Email:</strong>
+            {{ selectedSubscription.customerInfo.email || '-' }}
+          </p>
+        </div>
+
+        <div class="detail-section">
+          <h4>Plan & Billing</h4>
+          <p>
+            <strong>Plan:</strong>
+            {{ selectedSubscription.currentPlan || '-' }}
+          </p>
+          <p>
+            <strong>Price:</strong>
+            <ng-container
+              *ngIf="selectedSubscription.currentPriceCents != null; else naPrice"
+            >
+              {{ selectedSubscription.currentPriceCents / 100 | currency }}
+            </ng-container>
+            <ng-template #naPrice>-</ng-template>
+          </p>
+          <p>
+            <strong>Status:</strong>
+            {{ selectedSubscription.status || '-' }}
+          </p>
+          <p>
+            <strong>Current Period Start:</strong>
+            {{
+              selectedSubscription.billingCycle?.currentPeriodStartedAt || '-'
+            }}
+          </p>
+          <p>
+            <strong>Current Period End:</strong>
+            {{
+              selectedSubscription.billingCycle?.currentPeriodEndsAt || '-'
+            }}
+          </p>
+          <p>
+            <strong>Next Billing Date:</strong>
+            {{ selectedSubscription.nextBillingDate || '-' }}
+          </p>
+        </div>
+
+        <div class="detail-section">
+          <h4>Payment Method</h4>
+          <p>{{ selectedSubscription.paymentMethod || '-' }}</p>
+        </div>
+
+        <div class="detail-section">
+          <h4>Change Plan</h4>
+          <div class="form-row">
+            <label>
+              New Plan Product ID
+              <input
+                type="number"
+                [(ngModel)]="newPlanProductId"
+                placeholder="Product ID"
+              />
+            </label>
+
+            <label>
+              When
+              <select [(ngModel)]="changeWhen">
+                <option value="immediately">Immediately</option>
+                <option value="next_billing">Next Billing</option>
+              </select>
+            </label>
+
+            <button
+              (click)="changePlan()"
+              [disabled]="actionInProgress || !newPlanProductId"
+            >
+              Update Plan
+            </button>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h4>Cancel Subscription</h4>
+          <div class="form-row">
+            <label>
+              When
+              <select [(ngModel)]="cancelWhen">
+                <option value="immediately">Immediately</option>
+                <option value="period_end">At Period End</option>
+              </select>
+            </label>
+
+            <label>
+              Reason
+              <input
+                type="text"
+                [(ngModel)]="cancelReason"
+                placeholder="Optional note"
+              />
+            </label>
+
+            <button
+              class="danger"
+              (click)="cancelSelected()"
+              [disabled]="actionInProgress"
+            >
+              Cancel Subscription
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="message error">
+          {{ errorMessage }}
+        </div>
+        <div *ngIf="successMessage" class="message success">
+          {{ successMessage }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

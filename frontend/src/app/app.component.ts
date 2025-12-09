@@ -7,9 +7,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   selectedItemId: number | null = null;
+  showSubscriptions = false;
 
   onItemSelected(itemId: number): void {
     this.selectedItemId = itemId;
+  }
+
+  openSubscriptions(): void {
+    this.showSubscriptions = true;
+  }
+
+  closeSubscriptions(): void {
+    this.showSubscriptions = false;
   }
 }
 

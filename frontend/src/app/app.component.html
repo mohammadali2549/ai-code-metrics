@@ -1,9 +1,24 @@
 <div class="app-container">
-  <div class="carousel-section">
-    <app-carousel (itemSelected)="onItemSelected($event)"></app-carousel>
+  <div class="header-bar">
+    <h1>Carousel Dashboard</h1>
+    <button (click)="openSubscriptions()">View Subscriptions</button>
   </div>
-  <div class="details-section">
-    <app-item-details [itemId]="selectedItemId"></app-item-details>
+
+  <div class="content">
+    <div class="carousel-section" *ngIf="!showSubscriptions">
+      <app-carousel (itemSelected)="onItemSelected($event)"></app-carousel>
+    </div>
+
+    <div class="details-section" *ngIf="!showSubscriptions">
+      <app-item-details [itemId]="selectedItemId"></app-item-details>
+    </div>
+
+    <div class="subscriptions-section" *ngIf="showSubscriptions">
+      <div class="subscriptions-header-bar">
+        <button (click)="closeSubscriptions()">Back to Dashboard</button>
+      </div>
+      <app-subscriptions></app-subscriptions>
+    </div>
   </div>
 </div>
 
