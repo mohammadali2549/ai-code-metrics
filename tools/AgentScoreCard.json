@@ -1,8 +1,8 @@
 {
-    "issuesFound": 0,
-    "issuesFixed": 0,
-    "fixAttempts": 0,
-    "compilable": 0,
+    "issuesFound": 4,
+    "issuesFixed": 4,
+    "fixAttempts": 4,
+    "compilable": 1,
     "testsPassRate": 0,
     "examples": {
       "fixAttempts": 3,
